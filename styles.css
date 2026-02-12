@@ -316,6 +316,7 @@ body {
 .info-card ul {
     font-size: 0.9rem;
     margin: 0;
+    color: var(--text-dark);
 }
 
 .info-card ul {
@@ -324,6 +325,7 @@ body {
 
 .info-card li {
     margin-bottom: 0.35rem;
+    color: var(--text-dark);
 }
 
 /* Amount Badge */
