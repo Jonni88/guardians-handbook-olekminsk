@@ -6,6 +6,213 @@
     <meta name="description" content="Памятка для опекунов, попечителей и приемных семей Олёкминского района. Льготы, выплаты, документы, контакты.">
     <title>Памятка для опекунов | Олёкминский район</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Language switcher */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.5rem;
+            border-radius: var(--radius-sm);
+        }
+        
+        .lang-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .lang-btn:hover,
+        .lang-btn.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Telegram group block */
+        .telegram-block {
+            background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .telegram-block h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .telegram-block p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .telegram-btn {
+            background: white;
+            color: #0088cc;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+        }
+        
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .telegram-rules {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+        
+        .telegram-rules h4 {
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+        
+        .telegram-rules ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .telegram-rules li {
+            padding: 0.35rem 0;
+            color: rgba(255,255,255,0.9);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .telegram-rules li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #90EE90;
+        }
+        
+        /* Calendar section */
+        .calendar-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .calendar-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent-gold);
+        }
+        
+        .calendar-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .calendar-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .calendar-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-light);
+            font-size: 0.9rem;
+        }
+        
+        .calendar-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .calendar-card .time {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+        
+        .deadline-card {
+            border-left-color: #dc2626;
+            background: #fef2f2;
+        }
+        
+        .deadline-card h4 {
+            color: #dc2626;
+        }
+        
+        /* Feedback button */
+        .feedback-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 999;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feedback-float-btn:hover {
+            transform: translateY(-3px);
+            background: var(--secondary-blue);
+        }
+        
+        @media (max-width: 768px) {
+            .lang-switcher {
+                order: 3;
+                margin-top: 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .feedback-float-btn {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -15,22 +222,33 @@
                 <div class="logo">
                     <span class="logo-icon">👨‍👩‍👧‍👦</span>
                     <div class="logo-text">
-                        <h1>Памятка для опекунов</h1>
-                        <span>Олёкминский район, Республика Саха (Якутия)</span>
+                        <h1 data-ru="Памятка для опекунов" data-sah="Академия">Памятка для опекунов</h1>
+                        <span data-ru="Олёкминский район, Республика Саха (Якутия)" data-sah="Өлүөхүмэ улууһа, Саха Өрөспүүбүлүкэтэ">Олёкминский район, Республика Саха (Якутия)</span>
                     </div>
                 </div>
-                <button class="emergency-btn" onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})">
-                    🆘 Экстренная помощь
-                </button>
+                
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="lang-switcher">
+                        <button class="lang-btn active" onclick="setLanguage('ru')" id="lang-ru">🇷🇺 Русский</button>
+                        <button class="lang-btn" onclick="setLanguage('sah')" id="lang-sah">🦌 Саха тыла</button>
+                    </div>
+                    
+                    <button class="emergency-btn" onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})">
+                        🆘 <span data-ru="Экстренная помощь" data-sah="Терен бирии">Экстренная помощь</span>
+                    </button>
+                </div>
             </div>
         </div>
+        
         <nav class="nav">
             <ul class="nav-list">
-                <li class="nav-item"><a href="#payments" class="nav-link">💰 Выплаты</a></li>
-                <li class="nav-item"><a href="#documents" class="nav-link">📋 Документы</a></li>
-                <li class="nav-item"><a href="#contacts" class="nav-link">📞 Контакты</a></li>
+                <li class="nav-item"><a href="#payments" class="nav-link">💰 <span data-ru="Выплаты" data-sah="Толорулар">Выплаты</span></a></li>
+                <li class="nav-item"><a href="#documents" class="nav-link">📋 <span data-ru="Документы" data-sah="Документалар">Документы</span></a></li>
+                <li class="nav-item"><a href="#calendar" class="nav-link">📅 <span data-ru="Календарь" data-sah="Календарь">Календарь</span></a></li>
+                <li class="nav-item"><a href="#contacts" class="nav-link">📞 <span data-ru="Контакты" data-sah="Холбомулар">Контакты</span></a></li>
                 <li class="nav-item"><a href="#faq" class="nav-link">❓ FAQ</a></li>
-                <li class="nav-item"><a href="#resources" class="nav-link">🔗 Ресурсы</a></li>
+                <li class="nav-item"><a href="checklists.html" class="nav-link">✅ <span data-ru="Чек-листы" data-sah="Тиһиктэр">Чек-листы</span></a></li>
+                <li class="nav-item"><a href="#group" class="nav-link">💬 <span data-ru="Группа" data-sah="Группа">Группа</span></a></li>
             </ul>
         </nav>
     </header>
@@ -40,31 +258,100 @@
         <!-- Hero Section -->
         <section class="hero">
             <span class="hero-icon">🤝</span>
-            <h2>Информационная поддержка семей</h2>
-            <p>Вся необходимая информация для опекунов, попечителей и приемных родителей в одном месте. Льготы, выплаты, документы и ответы на вопросы.</p>
+            <h2 data-ru="Информационная поддержка семей" data-sah="Аймахтары информационнай көмөлөһүө" data-ru="Информационная поддержка семей">Информационная поддержка семей</h2>
+            <p data-ru="Вся необходимая информация для опекунов, попечителей и приемных родителей в одном месте. Льготы, выплаты, документы и ответы на вопросы." data-sah="Бэрэбэркэһии, толорулар, документалар уонна ыйытар кэпсэниилэр. Бары информация биир сирэйгэ.">Вся необходимая информация для опекунов, попечителей и приемных родителей в одном месте. Льготы, выплаты, документы и ответы на вопросы.</p>
         </section>
 
         <!-- Quick Access -->
         <div class="quick-access">
             <a href="#payments" class="quick-card">
                 <span class="quick-card-icon">💰</span>
-                <span>Льготы и выплаты</span>
+                <span data-ru="Льготы и выплаты" data-sah="Бэрэбэркэһии уонна толорулар">Льготы и выплаты</span>
             </a>
             <a href="#documents" class="quick-card">
                 <span class="quick-card-icon">📄</span>
-                <span>Документы</span>
+                <span data-ru="Документы" data-sah="Документалар">Документы</span>
+            </a>
+            <a href="checklists.html" class="quick-card">
+                <span class="quick-card-icon">✅</span>
+                <span data-ru="Чек-листы" data-sah="Тиһиктэр">Чек-листы</span>
             </a>
             <a href="#contacts" class="quick-card">
                 <span class="quick-card-icon">📞</span>
-                <span>Контакты</span>
-            </a>
-            <a href="#faq" class="quick-card">
-                <span class="quick-card-icon">❓</span>
-                <span>Вопросы и ответы</span>
+                <span data-ru="Контакты" data-sah="Холбомулар">Контакты</span>
             </a>
         </div>
 
-        <!-- Emergency Banner -->
+        <!-- Section: Calendar -->
+        <section class="calendar-section" id="calendar">
+            <div class="section-header">
+                <span class="section-icon">📅</span>
+                <h2 data-ru="Календарь приёмов и сроки" data-sah="Кэлискэ уонна ыйыллыбыт кэмнэр">Календарь приёмов и сроки</h2>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-card">
+                    <h4>🏛️ График приёма граждан</h4>
+                    <ul>
+                        <li><span class="time">Пн, Ср, Пт</span> — с 10:00 до 16:00</li>
+                        <li><span class="time">Вт, Чт</span> — приём по записи</li>
+                        <li><span class="time">Обед</span> — 13:00-14:00</li>
+                        <li><span class="time">Выходные</span> — Сб, Вс</li>
+                    </ul>
+                </div>
+
+                <div class="calendar-card deadline-card">
+                    <h4>⏰ Сроки подачи документов на выплаты</h4>
+                    <ul>
+                        <li><strong>Ежемесячные выплаты:</strong> до 26 числа текущего месяца</li>
+                        <li><strong>Единовременные пособия:</strong> в течение 6 месяцев</li>
+                        <li><strong>Материнский капитал:</strong> в течение года</li>
+                        <li><strong>Компенсация ЖКХ:</strong> раз в квартал</li>
+                    </ul>
+                </div>
+
+                <div class="calendar-card">
+                    <h4>📋 Периодическая отчётность</h4>
+                    <ul>
+                        <li><span class="time">Ежемесячно</span> — отчёт о расходах</li>
+                        <li><span class="time">Каждые 6 мес.</span> — отчёт об условиях проживания</li>
+                        <li><span class="time">Ежегодно</span> — подтверждение доходов</li>
+                        <li><span class="time">При изменениях</span> — сообщить в течение 1 мес.</li>
+                    </ul>
+                </div>
+
+                <div class="calendar-card">
+                    <h4>🎓 Школьный календарь</h4>
+                    <ul>
+                        <li><span class="time">1 сентября</span> — начало учебного года</li>
+                        <li><span class="time">1 октября</span> — подача заявлений на питание</li>
+                        <li><span class="time">1 января</span> — обновление льгот</li>
+                        <li><span class="time">Каникулы</span> — осенние, зимние, весенние</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Telegram Group -->
+        <section class="telegram-block" id="group">
+            <h3>💬 Чат-группа для опекунов Олёкминского района</h3>
+            <p>Присоединяйтесь к сообществу опекунов! Обменивайтесь опытом, получайте поддержку и будьте в курсе важных новостей.</p>
+            
+            <a href="https://t.me/+guardians_olekminsk" class="telegram-btn" target="_blank">
+                📱 Вступить в Telegram-группу
+            </a>
+
+            <div class="telegram-rules">
+                <h4>📋 Правила группы:</h4>
+                <ul>
+                    <li>Будьте вежливы и уважайте друг друга</li>
+                    <li>Не разглашайте персональные данные детей</li>
+                    <li>Проверяйте информацию из надёжных источников</li>
+                    <li>Запрещена реклама и спам</li>
+                    <li>Для срочных вопросов обращайтесь в органы опеки</li>
+                </ul>
+            </div
+        </section>
         <div class="emergency-banner" id="emergency">
             <h3>🆘 Телефоны экстренной помощи</h3>
             <div class="emergency-phones">
@@ -406,18 +693,52 @@
         </section>
     </main>
 
+    <!-- Feedback Float Button -->
+    <a href="feedback.html" class="feedback-float-btn">
+        💬 Задать вопрос
+    </a>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p>👨‍👩‍👧‍👦 Памятка для опекунов, попечителей и приемных семей</p>
-            <p>Олёкминский район, Республика Саха (Якутия)</p>
-            <p class="update-date">📅 Актуально на 2024-2025 гг.</p>
-            <p>Информация предоставлена справочно. Уточняйте детали в органах социальной защиты.</p>
+            <p>👨‍👩‍👧‍👦 <span data-ru="Памятка для опекунов, попечителей и приемных семей" data-sah="Академия">Памятка для опекунов, попечителей и приемных семей</span></p>
+            <p data-ru="Олёкминский район, Республика Саха (Якутия)" data-sah="Өлүөхүмэ улууһа, Саха Өрөспүүбүлүкэтэ">Олёкминский район, Республика Саха (Якутия)</p>
+            <p class="update-date">📅 <span data-ru="Актуально на 2024-2025 гг." data-sah="2024-2025 сылларга актуальнай">Актуально на 2024-2025 гг.</span></p>
+            <p data-ru="Информация предоставлена справочно. Уточняйте детали в органах социальной защиты." data-sah="Информация справочнай. Социальнай көмөлөһүө органдарын истэнэн иһиҥ.">Информация предоставлена справочно. Уточняйте детали в органах социальной защиты.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script>
+        // Language switching
+        function setLanguage(lang) {
+            localStorage.setItem('guardian-language', lang);
+            
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('lang-' + lang).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('[data-ru]').forEach(el => {
+                if (lang === 'sah' && el.dataset.sah) {
+                    el.textContent = el.dataset.sah;
+                } else {
+                    el.textContent = el.dataset.ru;
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang === 'sah' ? 'sah' : 'ru';
+        }
+        
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('guardian-language') || 'ru';
+            setLanguage(savedLang);
+        });
+
         // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
@@ -439,22 +760,24 @@
         // Smooth scroll for nav links
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Update active nav link
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(href);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
                 }
             });
         });
 
         // Highlight nav on scroll
         window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section, .emergency-banner');
+            const sections = document.querySelectorAll('.section, .calendar-section, .emergency-banner, .telegram-block');
             const navLinks = document.querySelectorAll('.nav-link');
             
             let current = '';
@@ -467,7 +790,8 @@
             
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
+                const href = link.getAttribute('href');
+                if (href === '#' + current) {
                     link.classList.add('active');
                 }
             });

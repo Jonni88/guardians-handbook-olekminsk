@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Чек-листы для опекунов Олёкминского района. Пошаговые инструкции по оформлению опекунства, документы на выплаты, ежемесячный контроль.">
+    <title>Чек-листы для опекунов | Олёкминский район</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Дополнительные стили для чек-листов */
+        .checklist-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+        
+        .checklist-page {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            page-break-inside: avoid;
+        }
+        
+        .checklist-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-blue);
+        }
+        
+        .checklist-header h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checklist-header p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
+        }
+        
+        .checklist-item:hover {
+            background: var(--bg-light);
+        }
+        
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary-green);
+            border-radius: 4px;
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            background: white;
+        }
+        
+        .checkbox:hover {
+            background: var(--light-green);
+        }
+        
+        .checkbox.checked {
+            background: var(--primary-green);
+        }
+        
+        .checkbox.checked::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+        
+        .checklist-content {
+            flex: 1;
+        }
+        
+        .checklist-content h4 {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .checklist-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .step-number {
+            background: var(--primary-blue);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        
+        .print-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .print-btn:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-2px);
+        }
+        
+        .checklist-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .reset-btn {
+            background: var(--text-light);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .reset-btn:hover {
+            background: var(--text-gray);
+        }
+        
+        .progress-bar {
+            background: var(--border-light);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            background: var(--primary-green);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .month-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            border-left: 4px solid var(--primary-green);
+        }
+        
+        .month-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .month-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .month-card li {
+            padding: 0.35rem 0;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .month-card li::before {
+            content: "•";
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+        
+        @media print {
+            .header, .nav, .print-btn, .reset-btn, .checklist-actions, .progress-bar, .progress-text {
+                display: none !important;
+            }
+            
+            .checklist-page {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            
+            .checkbox {
+                border-color: #333;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">✅</span>
+                    <div class="logo-text">
+                        <h1>Чек-листы для опекунов</h1>
+                        <span>Олёкминский район, Республика Саха (Якутия)</span>
+                    </div>
+                </div>
+                <button class="emergency-btn" onclick="window.location.href='index.html'">
+                    🏠 На главную
+                </button>
+            </div>
+        </div>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link">🏠 Главная</a></li>
+                <li class="nav-item"><a href="#how-to" class="nav-link">📋 Как оформить опекунство</a></li>
+                <li class="nav-item"><a href="#documents" class="nav-link">📄 Документы на выплаты</a></li>
+                <li class="nav-item"><a href="#monthly" class="nav-link">📅 Ежемесячный контроль</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="checklist-container">
+        <h1 style="text-align: center; margin-bottom: 0.5rem; color: var(--primary-blue);">✅ Чек-листы для опекунов</h1>
+        <p style="text-align: center; color: var(--text-gray); margin-bottom: 2rem;">Отмечайте выполненные шаги. Прогресс сохраняется автоматически.</p>
+        
+        <!-- Actions -->
+        <div class="checklist-actions">
+            <button class="print-btn" onclick="printChecklist('how-to')">
+                🖨️ Печать: Как оформить опекунство
+            </button>
+            <button class="print-btn" onclick="printChecklist('documents')">
+                🖨️ Печать: Документы на выплаты
+            </button>
+            <button class="print-btn" onclick="printChecklist('monthly')">
+                🖨️ Печать: Ежемесячный контроль
+            </button>
+            <button class="reset-btn" onclick="resetAll()">
+                🔄 Сбросить все галочки
+            </button>
+        </div>
+
+        <!-- Checklist 1: How to become a guardian -->
+        <section class="checklist-page" id="how-to">
+            <div class="checklist-header">
+                <h2>📋 Как оформить опекунство — 10 шагов</h2>
+                <p>Пошаговая инструкция по оформлению опекунства над ребёнком</p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-how-to" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="text-how-to">Выполнено: 0 из 10</div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="0">
+                <div class="step-number">1</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Соберите информацию о ребёнке</h4>
+                    <p>Узнайте обстоятельства, по которым ребёнок нуждается в опеке. Получите выписку из органов опеки.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="1">
+                <div class="step-number">2</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Получите консультацию в отделе опеки</h4>
+                    <p>Запишитесь на приём, получите полный перечень документов и рекомендации.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="2">
+                <div class="step-number">3</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Соберите пакет документов</h4>
+                    <p>Паспорт, справки с работы, о составе семьи, об отсутствии судимости, медицинская справка.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="3">
+                <div class="step-number">4</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Подготовьте жилое помещение</h4>
+                    <p>Убедитесь, что условия соответствуют требованиям. Сделайте фотографии.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="4">
+                <div class="step-number">5</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Получите согласие членов семьи</h4>
+                    <p>Согласие должны дать все совершеннолетние члены семьи, проживающие совместно.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="5">
+                <div class="step-number">6</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Подайте заявление в орган опеки</h4>
+                    <p>Подайте полный пакет документов. Получите расписку о приёме.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="6">
+                <div class="step-number">7</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Пройдите собеседование и обследование</h4>
+                    <p>Специалисты посетят ваш дом, проведут беседу с членами семьи.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="7">
+                <div class="step-number">8</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Получите заключение органа опеки</h4>
+                    <p>Срок рассмотрения — до 2 месяцев. В случае положительного решения документы направляются в суд.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="8">
+                <div class="step-number">9</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Примите участие в судебном заседании</h4>
+                    <p>Явитесь в суд в назначенное время. Имейте при себе паспорт.</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="how-to" data-index="9">
+                <div class="step-number">10</div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Получите свидетельство об опеке</h4>
+                    <p>После вступления решения суда в силу получите свидетельство в органе опеки.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist 2: Documents for payments -->
+        <section class="checklist-page" id="documents">
+            <div class="checklist-header">
+                <h2>📄 Документы для получения выплат</h2>
+                <p>Чек-лист документов для оформления социальных выплат</p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-documents" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="text-documents">Выполнено: 0 из 12</div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="0">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Паспорт гражданина РФ</h4>
+                    <p>Оригинал и копия всех заполненных страниц</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="1">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Свидетельство об установлении опеки</h4>
+                    <p>Оригинал и копия</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="2">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Свидетельство о рождении ребёнка</h4>
+                    <p>Оригинал и копия</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="3">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Справка с места жительства (форма 9)</h4>
+                    <p>Состав семьи, подтверждение регистрации</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="4">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Справка о доходах семьи</h4>
+                    <p>Справка 2-НДФЛ или из ЦЗН для неработающих за последние 12 месяцев</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="5">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Реквизиты банковского счёта</h4>
+                    <p>Выписка или справка из банка с реквизитами для перечисления выплат</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="6">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>СНИЛС ребёнка и опекуна</h4>
+                    <p>Оригиналы и копии</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="7">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Справка о пособиях из других организаций</h4>
+                    <p>Если получаете пособия в других местах</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="8">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>ИНН ребёнка (при наличии)</h4>
+                    <p>Копия свидетельства о присвоении ИНН</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="9">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Документы о проживании ребёнка</h4>
+                    <p>Справка из школы/детского сада или медицинского учреждения</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="10">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Справка об инвалидности (при наличии)</h4>
+                    <p>Для получения повышенных выплат</p>
+                </div>
+            </div>
+            
+            <div class="checklist-item" data-checklist="documents" data-index="11">
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <div class="checklist-content">
+                    <h4>Заявление на назначение выплат</h4>
+                    <p>Заполняется в Управлении социальной защиты</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist 3: Monthly control -->
+        <section class="checklist-page" id="monthly">
+            <div class="checklist-header">
+                <h2>📅 Ежемесячный контроль</h2>
+                <p>Что проверять каждый месяц по уходу за ребёнком</p>
+            </div>
+            
+            <div class="month-grid">
+                <div class="month-card">
+                    <h4>🏥 Здоровье ребёнка</h4>
+                    <ul>
+                        <li>Плановый осмотр педиатра</li>
+                        <li>Прививки по графику</li>
+                        <li>Контроль роста и веса</li>
+                        <li>Приём витаминов (по назначению)</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>📚 Образование</h4>
+                    <ul>
+                        <li>Посещаемость школы/детского сада</li>
+                        <li>Успеваемость и поведение</li>
+                        <li>Дополнительные занятия</li>
+                        <li>Связь с педагогами</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>💰 Финансы</h4>
+                    <ul>
+                        <li>Поступление выплат на счёт</li>
+                        <li>Сохранение чеков на расходы</li>
+                        <li>Планирование бюджета</li>
+                        <li>Отчётность перед органом опеки</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>📝 Документы</h4>
+                    <ul>
+                        <li>Сроки действия справок</li>
+                        <li>Обновление данных в органе опеки</li>
+                        <li>Подготовка к ежегодному отчёту</li>
+                        <li>Продление выплат</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>🎭 Развитие и досуг</h4>
+                    <ul>
+                        <li>Секции и кружки</li>
+                        <li>Общение со сверстниками</li>
+                        <li>Культурные мероприятия</li>
+                        <li>Семейные традиции</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>💬 Эмоциональное состояние</h4>
+                    <ul>
+                        <li>Беседы с ребёнком</li>
+                        <li>Настроение и поведение</li>
+                        <li>Консультация психолога</li>
+                        <li>Поддержка связи с родственниками</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>🏠 Бытовые условия</h4>
+                    <ul>
+                        <li>Проверка безопасности</li>
+                        <li>Сезонная одежда и обувь</li>
+                        <li>Питание и рацион</li>
+                        <li>Личное пространство ребёнка</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card">
+                    <h4>📞 Связь с органами опеки</h4>
+                    <ul>
+                        <li>Информирование об изменениях</li>
+                        <li>Консультации по вопросам</li>
+                        <li>Плановые проверки</li>
+                        <li>Участие в мероприятиях</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>👨‍👩‍👧‍👦 Памятка для опекунов, попечителей и приемных семей</p>
+            <p>Олёкминский район, Республика Саха (Якутия)</p>
+            <p class="update-date">📅 Актуально на 2024-2025 гг.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load saved state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('guardian-checklists');
+            if (saved) {
+                const state = JSON.parse(saved);
+                document.querySelectorAll('.checkbox').forEach(checkbox => {
+                    const item = checkbox.closest('.checklist-item');
+                    const checklist = item.dataset.checklist;
+                    const index = item.dataset.index;
+                    
+                    if (state[checklist] && state[checklist][index]) {
+                        checkbox.classList.add('checked');
+                    }
+                });
+                updateAllProgress();
+            }
+        }
+        
+        // Save state to localStorage
+        function saveState() {
+            const state = {};
+            document.querySelectorAll('.checklist-item').forEach(item => {
+                const checklist = item.dataset.checklist;
+                const index = item.dataset.index;
+                const checked = item.querySelector('.checkbox').classList.contains('checked');
+                
+                if (!state[checklist]) state[checklist] = {};
+                state[checklist][index] = checked;
+            });
+            localStorage.setItem('guardian-checklists', JSON.stringify(state));
+        }
+        
+        // Toggle checkbox
+        function toggleCheckbox(checkbox) {
+            checkbox.classList.toggle('checked');
+            saveState();
+            updateAllProgress();
+        }
+        
+        // Update progress bar
+        function updateProgress(checklistId) {
+            const items = document.querySelectorAll(`[data-checklist="${checklistId}"]`);
+            const checked = document.querySelectorAll(`[data-checklist="${checklistId}"] .checkbox.checked`);
+            const total = items.length;
+            const completed = checked.length;
+            const percent = total > 0 ? (completed / total) * 100 : 0;
+            
+            document.getElementById(`progress-${checklistId}`).style.width = percent + '%';
+            document.getElementById(`text-${checklistId}`).textContent = `Выполнено: ${completed} из ${total}`;
+        }
+        
+        // Update all progress bars
+        function updateAllProgress() {
+            updateProgress('how-to');
+            updateProgress('documents');
+        }
+        
+        // Reset all checkboxes
+        function resetAll() {
+            if (confirm('Сбросить все отметки?')) {
+                document.querySelectorAll('.checkbox').forEach(cb => cb.classList.remove('checked'));
+                localStorage.removeItem('guardian-checklists');
+                updateAllProgress();
+            }
+        }
+        
+        // Print specific checklist
+        function printChecklist(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>Чек-лист</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; padding: 20px; }
+                            .checklist-header { text-align: center; margin-bottom: 20px; }
+                            .checklist-item { display: flex; gap: 10px; padding: 10px; border-bottom: 1px solid #ddd; }
+                            .checkbox { width: 20px; height: 20px; border: 2px solid #333; flex-shrink: 0; }
+                            .checkbox.checked { background: #333; }
+                            .checkbox.checked::after { content: "✓"; color: white; }
+                            .step-number { background: #333; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+                            .checklist-content h4 { margin: 0 0 5px 0; }
+                            .checklist-content p { margin: 0; color: #666; font-size: 0.9em; }
+                            .progress-bar, .progress-text, .checklist-actions { display: none; }
+                        </style>
+                    </head>
+                    <body>
+                        ${element.outerHTML}
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadState);
+    </script>
+</body>
+</html>
